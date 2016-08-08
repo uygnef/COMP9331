@@ -1,0 +1,55 @@
+PING www.uq.edu.au (130.102.131.70) 722(750) bytes of data.
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=1 ttl=243 time=17.3 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=2 ttl=243 time=17.4 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=3 ttl=243 time=17.4 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=4 ttl=243 time=17.4 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=5 ttl=243 time=17.4 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=6 ttl=243 time=28.6 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=7 ttl=243 time=18.0 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=8 ttl=243 time=17.4 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=9 ttl=243 time=17.3 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=10 ttl=243 time=17.3 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=11 ttl=243 time=17.5 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=12 ttl=243 time=17.4 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=13 ttl=243 time=17.3 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=14 ttl=243 time=17.3 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=15 ttl=243 time=17.7 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=16 ttl=243 time=17.3 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=17 ttl=243 time=17.3 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=18 ttl=243 time=17.2 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=19 ttl=243 time=17.4 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=20 ttl=243 time=17.3 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=21 ttl=243 time=17.2 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=22 ttl=243 time=17.2 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=23 ttl=243 time=18.3 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=24 ttl=243 time=17.8 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=25 ttl=243 time=17.4 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=26 ttl=243 time=17.2 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=27 ttl=243 time=17.3 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=28 ttl=243 time=17.4 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=29 ttl=243 time=17.3 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=30 ttl=243 time=17.4 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=31 ttl=243 time=18.2 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=32 ttl=243 time=35.1 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=33 ttl=243 time=17.2 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=34 ttl=243 time=17.2 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=35 ttl=243 time=17.5 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=36 ttl=243 time=17.3 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=37 ttl=243 time=17.2 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=38 ttl=243 time=17.5 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=39 ttl=243 time=17.3 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=40 ttl=243 time=17.3 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=41 ttl=243 time=17.3 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=42 ttl=243 time=17.2 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=43 ttl=243 time=17.5 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=44 ttl=243 time=18.5 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=45 ttl=243 time=17.5 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=46 ttl=243 time=17.4 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=47 ttl=243 time=17.3 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=48 ttl=243 time=17.3 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=49 ttl=243 time=17.3 ms
+730 bytes from wsa-www.soe.uq.edu.au (130.102.131.70): icmp_req=50 ttl=243 time=17.2 ms
+
+--- www.uq.edu.au ping statistics ---
+50 packets transmitted, 50 received, 0% packet loss, time 49078ms
+rtt min/avg/max/mdev = 17.240/18.047/35.132/2.915 ms
