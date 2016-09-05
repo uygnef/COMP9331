@@ -31,8 +31,8 @@ def tr_seg(data):       #translate segment into class
         se_data = seg_str[18:]
     else:
         se_data = ""
-    self = segment(syn = int(seg_str[0]),fin = int(seg_str[1]), \
-                    seq_num = int(seg_str[2:10]),\
+    self = segment(syn = int(seg_str[0]),fin = int(seg_str[1]),
+                    seq_num = int(seg_str[2:10]),
                     ack_num = int(seg_str[10:18]), data = se_data)
     return self
 
@@ -50,21 +50,33 @@ def start():
     #ack = seg.ack_num
     if ack == 1:
         print("connect success!")
-        return sock     
+        return sock,0, ADDR
     else:
         print("Fail to connect")
         return 0
 
-sock=start()
-          
-while True:     
-    data,ADDR = sock.recvfrom(1024)  
-    seg = tr_seg(data).data            
-    print("received:", seg)
-    #print("A=",A)
-    sock.sendto("123".encode("UTF-8"), ADDR)
-    print("have send")
-            
+sock, ack, ADDR=start()
+print("ack=",ack)
+
+while True:
+    inf, outf, errf = select([sock, ], [], [], 0.1)
+    if inf == []:
+        send_seg = segment(ack_num = ack)
+        sock.sendto(send_seg.seg, ADDR)
+
+    else:
+        data,ADDR = sock.recvfrom(2048)
+        seg = tr_seg(data)
+        line = seg.data
+
+        if ack == seg.seq_num:
+            ack = seg.seq_num + len(line)
+            print(line, seg.seq_num)
+
+        send_seg = segment(ack_num=ack)
+        sock.sendto(send_seg.seg, ADDR)
+
+
             
             
             
