@@ -4,7 +4,7 @@
     <bookmark url="file://$USER_HOME$/Desktop/test/sender_new.py" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="259fafe4-f1b3-4cf8-a1b2-5ab67ffe83c9" name="Default" comment="">
+    <list default="true" id="259fafe4-f1b3-4cf8-a1b2-5ab67ffe83c9" name="Default" comment="plD">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="COMP9331.iws" />
@@ -31,21 +31,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="sender_new.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="sender_new.py" pinned="false" current-in-tab="true">
         <entry file="file://$USER_HOME$/Desktop/test/sender_new.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2068">
+            <state relative-caret-position="916">
               <caret line="106" column="10" selection-start-line="106" selection-start-column="10" selection-end-line="106" selection-end-column="10" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="receiver.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="receiver.py" pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/Desktop/test/receiver.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1728">
-              <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+            <state relative-caret-position="768">
+              <caret line="50" column="16" selection-start-line="50" selection-start-column="16" selection-end-line="50" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -436,7 +436,14 @@
       <option name="project" value="LOCAL" />
       <updated>1472966140582</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="plD">
+      <created>1473082348514</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1473082348514</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -487,7 +494,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="1" />
     <MESSAGE value="use GBN" />
-    <option name="LAST_COMMIT_MESSAGE" value="use GBN" />
+    <MESSAGE value="plD" />
+    <option name="LAST_COMMIT_MESSAGE" value="plD" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -599,18 +607,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Desktop/test/sender_new.py">
+    <entry file="file://$USER_HOME$/Desktop/test/receiver.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2068">
-          <caret line="106" column="10" selection-start-line="106" selection-start-column="10" selection-end-line="106" selection-end-column="10" />
+        <state relative-caret-position="768">
+          <caret line="50" column="16" selection-start-line="50" selection-start-column="16" selection-end-line="50" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Desktop/test/receiver.py">
+    <entry file="file://$USER_HOME$/Desktop/test/sender_new.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1728">
-          <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+        <state relative-caret-position="916">
+          <caret line="106" column="10" selection-start-line="106" selection-start-column="10" selection-end-line="106" selection-end-column="10" />
           <folding />
         </state>
       </provider>
