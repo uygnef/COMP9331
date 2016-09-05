@@ -2,7 +2,7 @@ from socket import *
 from queue import *
 from select import *
 import sys, getopt
-from time import *
+
 from random import *
 
 class segment:  # use segment class to store the sending segment.
