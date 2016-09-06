@@ -1,6 +1,7 @@
 from socket import *
 from queue import *
 from select import *
+import time
 import sys, getopt
 
 from random import *
@@ -52,27 +53,62 @@ def start():
 
     return sock,ADDR,0
 
-def PLD_send(sock, data, seq, ADDR, flag):
-    if flag == 1:
-        sock.sendto(segment(data = str(data), seq_num = seq).seg,ADDR)
+def PLD_send(segment):
+    global sock
+    global ADDR
+    if round(random() * possi):
+        sock.sendto(segment.seg, ADDR)
         #print(segment(data = str(data), seq_num = seq))
-    return segment(data = str(data), seq_num = seq)
 
-print(segment(ack_num=1450))
-print(segment(ack_num=1500))
-sock, ADDR, seq = start()
+def create_window():
+    global have_send
+    global file
+    global sequence_number
+    global MWS
+    global data
+    while len(have_send) < MWS:
+        have_send.append(segment(data = str(data), seq_num = sequence_number))
+        sequence_number += len(data)
+        data = file.read(32)
+    if data:
+        return True
+    return False
 
+sock, ADDR, sequence_number = start()
 file = open('test1.txt')
-
-
-
-data = file.read(32)
-
 seed(50)
 possi = 1
-now_win_size = 0
 have_send = []
 MWS = 3
+timer = time.time()
+
+while create_window():
+    for i in have_send:
+        if time.time() < timer + timeout / 1000 or fast_flag == 3:
+            timer == time.time()
+            break
+        inf, outf, errf = select([sock, ], [], [], timeout/1000)
+        if inf != []:
+            s, ADDR = sock.recvfrom(1024)       #receive the data and react according ack_num
+            seg = tr_seg(s)
+            #print(seg, "seq_num =", seq)
+            for i in have_send:
+                if seg.ack_num == i.seq_num:  # judge if the ack_num == last sequence number
+                    have_send = have_send[have_send.index(i):]    #if the sequence number is in have_send, move the window
+                    timer = time.time()
+                    break
+        else:
+            PLD_send(i)
+
+
+
+
+
+
+        PLD_send(i)
+
+
+
 while data or len(have_send):
     if len(have_send) < MWS and data:
         flag = round(random()*possi)
