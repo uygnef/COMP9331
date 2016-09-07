@@ -58,7 +58,7 @@ def PLD_send(segment):
     global ADDR
     if round(random() * possi):
         sock.sendto(segment.seg, ADDR)
-        #print(segment(data = str(data), seq_num = seq))
+        print("PLD_send:", segment.data, segment.seq_num)
 
 def create_window():
     global have_send
@@ -66,13 +66,31 @@ def create_window():
     global sequence_number
     global MWS
     global data
-    while len(have_send) < MWS:
+    while len(have_send) < MWS and data:
         have_send.append(segment(data = str(data), seq_num = sequence_number))
         sequence_number += len(data)
         data = file.read(32)
-    if data:
-        return True
-    return False
+    return data
+
+def close(ADDR):
+    global sock
+    global sequence_number
+    last_time = time.time()
+
+    print("willlllll close")
+    while True:
+        sock.sendto(segment(seq_num=sequence_number + 2, fin=1).seg, ADDR)
+        inf, outf, errf = select([sock, ], [], [])
+        if inf:
+            print("recv ack")
+            se,ADDR = sock.recvfrom(1024)
+            seg = tr_seg(se)
+            print("compare:",seg.ack_num, sequence_number +3)
+            if seg.ack_num == sequence_number +3:
+            if seg.FIN == 1:
+                sock.close()
+                break
+
 
 sock, ADDR, sequence_number = start()
 file = open('test1.txt')
@@ -81,68 +99,33 @@ possi = 1
 have_send = []
 MWS = 3
 timer = time.time()
-
-while create_window():
+timeout=2000
+old_ack = -1
+fast_re = 0
+data = file.read(32)
+while create_window() or have_send:
     for i in have_send:
-        if time.time() < timer + timeout / 1000 or fast_flag == 3:
-            timer == time.time()
-            break
-        inf, outf, errf = select([sock, ], [], [], timeout/1000)
-        if inf != []:
-            s, ADDR = sock.recvfrom(1024)       #receive the data and react according ack_num
-            seg = tr_seg(s)
-            #print(seg, "seq_num =", seq)
-            for i in have_send:
-                if seg.ack_num == i.seq_num:  # judge if the ack_num == last sequence number
-                    have_send = have_send[have_send.index(i):]    #if the sequence number is in have_send, move the window
-                    timer = time.time()
-                    break
-        else:
-            PLD_send(i)
-
-
-
-
-
-
-        PLD_send(i)
-
-
-
-while data or len(have_send):
-    if len(have_send) < MWS and data:
-        flag = round(random()*possi)
-        send_seg = PLD_send(sock, data, seq, ADDR, flag)
-        have_send.append(send_seg)
-
         inf, outf, errf = select([sock, ], [], [])
-        if inf != []:
+        if inf:
             s, ADDR = sock.recvfrom(1024)       #receive the data and react according ack_num
             seg = tr_seg(s)
-            #print(seg, "seq_num =", seq)
-            for i in have_send:
-                if seg.ack_num == i.seq_num:  # judge if the ack_num == last sequence number
-                    have_send = have_send[have_send.index(i):]    #if the sequence number is in have_send, move the window
-
-        data = file.read(32)
-        seq += len(data)
-    else:
-        while len(have_send) >= MWS or (not data and len(have_send) != 0):
-            for a in have_send:
-                inf, outf, errf = select([sock, ], [], [])
-                if inf != []:
-                    s, ADDR = sock.recvfrom(1024)  # receive the data and react according ack_num
-                    seg = tr_seg(s)
-                    print("ack_num =", seg.ack_num)
-                    for i in have_send:
-                        if seg.ack_num == i.seq_num +len(i.data):  # judge if the ack_num == last sequence number
-                            have_send = have_send[have_send.index(i)+1:]
-
+            if old_ack == seg.ack_num:
+                fast_re += 1
+                old_ack = seg.ack_num
+                if fast_re >= 3:
+                    fast_re = 0
                     break
-                flag = round(random() * possi)
-                send_seg = PLD_send(sock, a.data, a.seq_num, ADDR, flag)
-
-                print(send_seg.seq_num, len(have_send), have_send[0].data)
+            for j in have_send:
+                if seg.ack_num == j.seq_num+len(j.data):  # judge if the ack_num == last sequence number
+                    have_send = have_send[have_send.index(j)+1:]  # if the sequence number is in have_send, move the window
+                    timer = time.time()                     #break to the beginning and send according new window
+                    break
+                                                            #if update the window, go to create_window.
+        if time.time() > timer + timeout / 1000:        #if timeout, go to beginning and resend from the first
+            timer == time.time()                        #one in send window. reset timer.
+            break
+        PLD_send(i)
+close(ADDR)
   
         
 
