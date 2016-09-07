@@ -56,19 +56,22 @@ def start():
         return 0
 
 sock, ack, ADDR=start()
-print("ack=",ack)
 
 while True:
     inf, outf, errf = select([sock, ], [], [], 0.1)
     if inf == []:
         send_seg = segment(ack_num = ack)
         sock.sendto(send_seg.seg, ADDR)
-
     else:
-        data,ADDR = sock.recvfrom(2048)
+        data,ADDR = sock.recvfrom(1024)
         seg = tr_seg(data)
         line = seg.data
-
+        if seg.FIN == 1:
+            sock.sendto(segment(ack_num=seg.seq_num+1).seg, ADDR)
+            sock.sendto(segment(fin=1).seg, ADDR)
+            sock.close()
+            print("sock closed")
+            break
         if ack == seg.seq_num:
             ack = seg.seq_num + len(line)
             print(line, seg.seq_num)
