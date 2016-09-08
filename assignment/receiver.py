@@ -1,8 +1,6 @@
 from socket import *
-from queue import *
 from select import *
 import sys, getopt
-from time import *
 
 class segment:  # use segment class to store the sending segment.
     def __init__(self, syn=0, fin=0, seq_num=0, ack_num=0, data=""):
@@ -36,8 +34,8 @@ def tr_seg(data):       #translate segment into class
                     ack_num = int(seg_str[10:18]), data = se_data)
     return self
 
-def start():
-    ADDR = ('127.0.0.1', 31415)  
+def start(port):
+    ADDR = ('127.0.0.1', int(port))
     sock = socket(AF_INET, SOCK_DGRAM)  
     sock.bind(ADDR)
     data,ADDR = sock.recvfrom(1024)  
@@ -54,8 +52,11 @@ def start():
     else:
         print("Fail to connect")
         return 0
-
-sock, ack, ADDR=start()
+ops, args = getopt.getopt(sys.argv[1:], " ")
+port = args[0]
+file_name = args[1]
+sock, ack, ADDR=start(port)
+f=open(file_name,'w')
 
 while True:
     inf, outf, errf = select([sock, ], [], [], 0.1)
@@ -74,7 +75,7 @@ while True:
             break
         if ack == seg.seq_num:
             ack = seg.seq_num + len(line)
-            print(line, seg.seq_num)
+            f.write(line)
 
         send_seg = segment(ack_num=ack)
         sock.sendto(send_seg.seg, ADDR)
