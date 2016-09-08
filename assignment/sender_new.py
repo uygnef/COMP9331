@@ -56,7 +56,7 @@ def PLD_send(segment):
     global ADDR
     global log_file
     log_file.writelines("snd  %2.3f D %8d %3d %8d\n"%( time.time()%60, segment.seq_num, len(segment.data), 0 ))
-    if round(random() * possi):
+    if random()+possi > 1:
         sock.sendto(segment.seg, ADDR)
         print("PLD_send:", segment.data, segment.seq_num)
 
