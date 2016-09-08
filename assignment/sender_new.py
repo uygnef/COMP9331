@@ -5,13 +5,14 @@ import sys, getopt
 from random import *
 
 class segment:  # use segment class to store the sending segment.
-    def __init__(self, syn=0, fin=0, seq_num=0, ack_num=0, data=""):
+    def __init__(self, syn=0, ack=0, fin=0, seq_num=0, ack_num=0, data=""):
         self.SYN = syn
         self.FIN = fin
+        self.ACK = ack
         self.ack_num = ack_num  # new sequence number, sender as ack number
         self.seq_num = seq_num  # new sequence number
         self.data = data
-        self.seg_str = str(self.SYN) + str(fin) \
+        self.seg_str = str(self.SYN) + str(self.FIN) + str(self.ACK)\
                        + "{0:08d}".format(self.seq_num) \
                        + "{0:08d}".format(self.ack_num) + data
         self.seg = self.seg_str.encode("UTF-8")
@@ -20,36 +21,40 @@ class segment:  # use segment class to store the sending segment.
         print("seg_str", self.seg_str)
         print("SYN", self.SYN)
         print("FIN", self.FIN)
+        print("ACK", self.ACK)
         print("seq_num", self.seq_num)
         print("ack_num", self.ack_num)
         print("data", self.data)
         return ("--------------------")
- 
+
 def tr_seg(data):       #translate segment into class
     seg_str = data.decode("UTF-8")
-    if len(seg_str) > 18:
-        se_data = seg_str[18:]
-    else:
-        se_data = ""
-    self = segment(syn = int(seg_str[0]),fin = int(seg_str[1]),
-                    seq_num = int(seg_str[2:10]),
-                    ack_num = int(seg_str[10:18]), data = se_data)
+    self = segment(syn = int(seg_str[0]),fin = int(seg_str[1]), ack = int(seg_str[2]),
+                    seq_num = int(seg_str[3:11]),
+                    ack_num = int(seg_str[11:19]), data = seg_str[19:])
     return self
 
 def start(IP, port):
+    global log_file
     ADDR = (IP, int(port))
     sock = socket(AF_INET, SOCK_DGRAM)
-    sock.sendto(segment(syn=1).seg, ADDR)  #syn=1, seq_num=0
+    seq = 0
+    first_segment = segment(syn=1,seq_num=seq)
+    sock.sendto(first_segment.seg, ADDR)  #syn=1, seq_num=0
+    log_file.writelines("snd  %2.3f S %8d %3d %8d\n"%( time.time()%60, first_segment.seq_num, len(first_segment.data), 0 ))
+
     data,ADDR = sock.recvfrom(1024)
     seg = tr_seg(data)
-    ack = seg.ack_num
-    seq = seg.seq_num
-    if ack == 1:
-        seq += 1
-        sock.sendto(segment(ack_num = seq).seg, ADDR)
-        print("connect success")
+    log_file.writelines("rcv  %2.3f SA %8d %3d %8d\n"%( time.time()%60, seg.seq_num, len(seg.data), seg.ack_num ))
 
-    return sock,ADDR,0
+    if seg.SYN == 1 and seg.ACK ==1:
+        seq += 1
+        sock.sendto(segment(ack=1, ack_num = seg.ack_num+1, seq_num=seq).seg, ADDR)
+        print("connect success")
+    else:
+        sock.close()
+        exit("connect fail")
+    return sock,ADDR,seq,seg.ack_num
 
 def PLD_send(segment):
     global sock
@@ -66,7 +71,7 @@ def create_window():
     global sequence_number
     global data
     while len(have_send) < MWS and data:
-        have_send.append(segment(data = str(data), seq_num = sequence_number))
+        have_send.append(segment(data = str(data), seq_num = sequence_number, ack_num=acknowledge_number))
         sequence_number += len(data)
         data = file.read(MSS)
     return data
@@ -74,7 +79,6 @@ def create_window():
 def close(ADDR):
     global sock
     global sequence_number
-    last_time = time.time()
 
     print("willlllll close")
     while True:
@@ -103,9 +107,9 @@ timeout= int(args[5])
 possi = float(args[6])
 seeds = int(args[7])
 seed(seeds)
-sock, ADDR, sequence_number = start(IP,port)
 file = open(read_file)
 log_file = open("Sender_log.txt", "w")
+sock, ADDR, sequence_number,acknowledge_number = start(IP,port)
 
 have_send = []
 
@@ -115,9 +119,11 @@ old_ack = -1
 fast_re = 0
 data = file.read(MSS)
 while create_window() or have_send:
-    print("new loop")
+
     for i in have_send:
-        inf, outf, errf = select([sock, ], [], [])
+
+        inf, outf, errf = select([sock, ], [], [],0.1)
+
         if inf:
             s, ADDR = sock.recvfrom(1024)       #receive the data and react according ack_num
             seg = tr_seg(s)
