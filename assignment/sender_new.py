@@ -54,8 +54,8 @@ def start(IP, port):
 def PLD_send(segment):
     global sock
     global ADDR
-    #global log_file
-    #log_file.write()
+    global log_file
+    log_file.writelines("snd  %2.3f D %8d %3d %8d\n"%( time.time()%60, segment.seq_num, len(segment.data), 0 ))
     if round(random() * possi):
         sock.sendto(segment.seg, ADDR)
         print("PLD_send:", segment.data, segment.seq_num)
@@ -105,7 +105,7 @@ seeds = int(args[7])
 seed(seeds)
 sock, ADDR, sequence_number = start(IP,port)
 file = open(read_file)
-
+log_file = open("Sender_log.txt", "w")
 
 have_send = []
 
@@ -121,6 +121,8 @@ while create_window() or have_send:
         if inf:
             s, ADDR = sock.recvfrom(1024)       #receive the data and react according ack_num
             seg = tr_seg(s)
+            log_file.writelines("rcv  %2.3f A %8d %3d %8d \n" % (time.time()%60, seg.seq_num, len(seg.data), seg.ack_num))
+            print(seg.ack_num)
             if old_ack == seg.ack_num:
                 fast_re += 1
                 old_ack = seg.ack_num
@@ -142,22 +144,3 @@ while create_window() or have_send:
             break
         PLD_send(i)
 close(ADDR)
-  
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
