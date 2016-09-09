@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="259fafe4-f1b3-4cf8-a1b2-5ab67ffe83c9" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assignment/receiver.py" afterPath="$PROJECT_DIR$/assignment/receiver.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assignment/sender_new.py" afterPath="$PROJECT_DIR$/assignment/sender_new.py" />
     </list>
     <ignored path="COMP9331.iws" />
@@ -34,11 +33,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="receiver.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="receiver.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assignment/receiver.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="64" column="9" selection-start-line="64" selection-start-column="9" selection-end-line="64" selection-end-column="9" />
+            <state relative-caret-position="2352">
+              <caret line="70" column="46" selection-start-line="70" selection-start-column="46" selection-end-line="70" selection-end-column="46" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
                 <element signature="e#132#974#0" expanded="false" />
@@ -47,11 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sender_new.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="sender_new.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/assignment/sender_new.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="124" column="53" selection-start-line="124" selection-start-column="53" selection-end-line="124" selection-end-column="53" />
+            <state relative-caret-position="951">
+              <caret line="95" column="46" selection-start-line="95" selection-start-column="46" selection-end-line="95" selection-end-column="46" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -532,7 +531,14 @@
       <option name="project" value="LOCAL" />
       <updated>1473335760542</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="some issue with ack_num, unfix">
+      <created>1473346043492</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1473346043492</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -591,7 +597,8 @@
     <MESSAGE value="add STDIN model" />
     <MESSAGE value="update sender_log" />
     <MESSAGE value="fix possibility" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix possibility" />
+    <MESSAGE value="some issue with ack_num, unfix" />
+    <option name="LAST_COMMIT_MESSAGE" value="some issue with ack_num, unfix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -858,23 +865,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assignment/sender_new.py">
+    <entry file="file://$PROJECT_DIR$/assignment/receiver.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="124" column="53" selection-start-line="124" selection-start-column="53" selection-end-line="124" selection-end-column="53" />
+        <state relative-caret-position="2352">
+          <caret line="70" column="46" selection-start-line="70" selection-start-column="46" selection-end-line="70" selection-end-column="46" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
+            <element signature="e#132#974#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assignment/receiver.py">
+    <entry file="file://$PROJECT_DIR$/assignment/sender_new.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="64" column="9" selection-start-line="64" selection-start-column="9" selection-end-line="64" selection-end-column="9" />
+        <state relative-caret-position="951">
+          <caret line="95" column="46" selection-start-line="95" selection-start-column="46" selection-end-line="95" selection-end-column="46" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
-            <element signature="e#132#974#0" expanded="false" />
           </folding>
         </state>
       </provider>

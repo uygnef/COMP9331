@@ -45,30 +45,35 @@ def start(IP, port):
 
     data,ADDR = sock.recvfrom(1024)
     seg = tr_seg(data)
-    log_file.writelines("rcv  %2.3f SA %8d %3d %8d\n"%( time.time()%60, seg.seq_num, len(seg.data), seg.ack_num ))
+    log_file.writelines("rcv  %2.3f SA%8d %3d %8d\n"%( time.time()%60, seg.seq_num, len(seg.data), seg.ack_num ))
 
     if seg.SYN == 1 and seg.ACK ==1:
         seq += 1
-        sock.sendto(segment(ack=1, ack_num = seg.ack_num+1, seq_num=seq).seg, ADDR)
+        sock.sendto(segment(ack=1, ack_num = seg.seq_num+1, seq_num=seq).seg, ADDR)
+        log_file.writelines("snd  %2.3f A %8d %3d %8d\n" % (time.time() % 60, seq, 0, seg.seq_num+1))
         print("connect success")
     else:
         sock.close()
         exit("connect fail")
-    return sock,ADDR,seq,seg.ack_num
+    return sock,ADDR,seq,seg.seq_num+1
 
 def PLD_send(segment):
     global sock
     global ADDR
     global log_file
-    log_file.writelines("snd  %2.3f D %8d %3d %8d\n"%( time.time()%60, segment.seq_num, len(segment.data), 0 ))
     if random()+possi > 1:
         sock.sendto(segment.seg, ADDR)
         print("PLD_send:", segment.data, segment.seq_num)
+        log_file.writelines("snd  %2.3f D %8d %3d %8d\n" % (time.time() % 60, segment.seq_num, len(segment.data), segment.ack_num))
+    else:
+        log_file.writelines("drop %2.3f D %8d %3d %8d\n"%( time.time()%60, segment.seq_num, len(segment.data), segment.ack_num))
+
 
 def create_window():
     global have_send
     global file
     global sequence_number
+    global acknowledge_number
     global data
     while len(have_send) < MWS and data:
         have_send.append(segment(data = str(data), seq_num = sequence_number, ack_num=acknowledge_number))
@@ -81,19 +86,19 @@ def close(ADDR):
     global sequence_number
 
     print("willlllll close")
+    sock.sendto(segment(seq_num=sequence_number + 2, fin=1).seg, ADDR)
+    log_file.writelines("snd  %2.3f F %8d %3d %8d\n" % (time.time() % 60, sequence_number+2, 0, acknowledge_number))
+    print("recv ack")
     while True:
-        sock.sendto(segment(seq_num=sequence_number + 2, fin=1).seg, ADDR)
-        inf, outf, errf = select([sock, ], [], [])
-        if inf:
-            print("recv ack")
-            se,ADDR = sock.recvfrom(1024)
-            seg = tr_seg(se)
-            print("compare:",seg.ack_num, sequence_number +3)
-            if seg.ack_num == sequence_number +3:
-                continue
-            if seg.FIN == 1:
-                sock.close()
-                break
+        se,ADDR = sock.recvfrom(1024)
+        seg = tr_seg(se)
+        if seg.FIN == 1:
+            log_file.writelines("rcv  %2.3f FA%8d %3d %8d\n" % (time.time() % 60, seg.seq_num, 0, seg.ack_num))
+                    #sock.sendto(segment(ack=1), ADDR)
+            log_file.writelines("snd  %2.3f A %8d %3d %8d\n" % (time.time() % 60, seg.ack_num, 0, seg.seq_num+1))
+            sock.close()
+            break
+
 
 ops, args = getopt.getopt(sys.argv[1:], " ")
 
@@ -119,11 +124,8 @@ old_ack = -1
 fast_re = 0
 data = file.read(MSS)
 while create_window() or have_send:
-
     for i in have_send:
-
         inf, outf, errf = select([sock, ], [], [],0.1)
-
         if inf:
             s, ADDR = sock.recvfrom(1024)       #receive the data and react according ack_num
             seg = tr_seg(s)
