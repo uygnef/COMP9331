@@ -51,7 +51,7 @@ def start(IP, port):
         seq += 1
         sock.sendto(segment(ack=1, ack_num = seg.seq_num+1, seq_num=seq).seg, ADDR)
         log_file.writelines("snd  %2.3f A %8d %3d %8d\n" % (time.time() % 60, seq, 0, seg.seq_num+1))
-        print("connect success")
+        #print("connect success")
     else:
         sock.close()
         exit("connect fail")
@@ -63,7 +63,7 @@ def PLD_send(segment):
     global log_file
     if random()+possi > 1:
         sock.sendto(segment.seg, ADDR)
-        print("PLD_send:", segment.data, segment.seq_num)
+        #print("PLD_send:", segment.data, segment.seq_num)
         log_file.writelines("snd  %2.3f D %8d %3d %8d\n" % (time.time() % 60, segment.seq_num, len(segment.data), segment.ack_num))
     else:
         log_file.writelines("drop %2.3f D %8d %3d %8d\n"%( time.time()%60, segment.seq_num, len(segment.data), segment.ack_num))
@@ -88,7 +88,7 @@ def close(ADDR):
     print("willlllll close")
     sock.sendto(segment(seq_num=sequence_number + 2, fin=1).seg, ADDR)
     log_file.writelines("snd  %2.3f F %8d %3d %8d\n" % (time.time() % 60, sequence_number+2, 0, acknowledge_number))
-    print("recv ack")
+    #print("recv ack")
     while True:
         se,ADDR = sock.recvfrom(1024)
         seg = tr_seg(se)
@@ -130,17 +130,17 @@ while create_window() or have_send:
             s, ADDR = sock.recvfrom(1024)       #receive the data and react according ack_num
             seg = tr_seg(s)
             log_file.writelines("rcv  %2.3f A %8d %3d %8d \n" % (time.time()%60, seg.seq_num, len(seg.data), seg.ack_num))
-            print(seg.ack_num)
+            #print(seg.ack_num)
             if old_ack == seg.ack_num:
                 fast_re += 1
                 old_ack = seg.ack_num
                 if fast_re >= 3:
                     fast_re = 0
-                    print("use fast retrans")
+                    #print("use fast retrans")
                     break
             for j in have_send:
                 if seg.ack_num == j.seq_num+len(j.data):  # judge if the ack_num == last sequence number
-                    print("have cutdown")
+                    #print("have cutdown")
                     have_send = have_send[have_send.index(j)+1:]  # if the sequence number is in have_send, move the window
                     timer = time.time()                     #break to the beginning and send according new window
                     break
@@ -148,7 +148,7 @@ while create_window() or have_send:
         if time.time() > timer + timeout / 1000:        #if timeout, go to beginning and resend from the first
             #print("timer before:", timer)
             timer = time.time()                        #one in send window. reset timer.
-            print("time out! timer = ", timer, "---",time.time())
+            #print("time out! timer = ", timer, "---",time.time())
             break
         PLD_send(i)
 close(ADDR)

@@ -45,7 +45,7 @@ def start(port):
     print(seg)
     #ack = seg.ack_num
     if seg.ACK == 1:
-        print("connect success!")
+        #print("connect success!")
         return sock,seg.seq_num, ADDR,0
     else:
         sock.close()
@@ -59,7 +59,7 @@ f=open(file_name,'w')
 while True:
     inf, outf, errf = select([sock, ], [], [],0.1)
     if inf == []:
-        print("no input")
+        #print("no input")
         send_seg = segment(ack_num = ack,seq_num=sequence_number)
         sock.sendto(send_seg.seg, ADDR)
     else:
@@ -72,7 +72,7 @@ while True:
             sequence_number += 1
             sock.sendto(segment(fin=1, ack_num=seg.seq_num+4,seq_num=sequence_number).seg, ADDR)
             sock.close()
-            print("sock closed")
+            #print("sock closed")
             break
         if ack == seg.seq_num:
             ack = seg.seq_num + len(line)
