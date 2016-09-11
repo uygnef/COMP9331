@@ -61,12 +61,22 @@ def PLD_send(segment):
     global sock
     global ADDR
     global log_file
+    global data_seg_sd
+    global data_drop
+
+    #global send_segment
+    #global drop_segment
     if random()+possi > 1:
         sock.sendto(segment.seg, ADDR)
+        data_seg_sd += 1
         #print("PLD_send:", segment.data, segment.seq_num)
         log_file.writelines("snd  %2.3f D %8d %3d %8d\n" % (time.time() % 60, segment.seq_num, len(segment.data), segment.ack_num))
     else:
+        data_drop += 1
         log_file.writelines("drop %2.3f D %8d %3d %8d\n"%( time.time()%60, segment.seq_num, len(segment.data), segment.ack_num))
+    global amount_data_tr
+    amount_data_tr += len(segment.data.encode("utf-8"))
+
 
 
 def create_window():
@@ -85,7 +95,7 @@ def close(ADDR):
     global sock
     global sequence_number
 
-    print("willlllll close")
+    #print("willlllll close")
     sock.sendto(segment(seq_num=sequence_number + 2, fin=1).seg, ADDR)
     log_file.writelines("snd  %2.3f F %8d %3d %8d\n" % (time.time() % 60, sequence_number+2, 0, acknowledge_number))
     #print("recv ack")
@@ -112,10 +122,14 @@ timeout= int(args[5])
 possi = float(args[6])
 seeds = int(args[7])
 seed(seeds)
+amount_data_tr = 0
+data_seg_sd = 0
+data_drop = 0
 file = open(read_file)
 log_file = open("Sender_log.txt", "w")
 sock, ADDR, sequence_number,acknowledge_number = start(IP,port)
-
+number_of_dup = 0
+privious_seq = 0
 have_send = []
 
 timer = time.time()
@@ -123,25 +137,31 @@ timer = time.time()
 old_ack = -1
 fast_re = 0
 data = file.read(MSS)
-while create_window() or have_send:
+create_window()
+while have_send:
     for i in have_send:
-        inf, outf, errf = select([sock, ], [], [],0.1)
+        inf, outf, errf = select([sock, ], [], [],0.00001)
         if inf:
             s, ADDR = sock.recvfrom(1024)       #receive the data and react according ack_num
             seg = tr_seg(s)
+
             log_file.writelines("rcv  %2.3f A %8d %3d %8d \n" % (time.time()%60, seg.seq_num, len(seg.data), seg.ack_num))
             #print(seg.ack_num)
             if old_ack == seg.ack_num:
+                #print("ack dup")
+                number_of_dup += 1
                 fast_re += 1
                 old_ack = seg.ack_num
                 if fast_re >= 3:
                     fast_re = 0
                     #print("use fast retrans")
                     break
+            old_ack = seg.ack_num
             for j in have_send:
                 if seg.ack_num == j.seq_num+len(j.data):  # judge if the ack_num == last sequence number
                     #print("have cutdown")
                     have_send = have_send[have_send.index(j)+1:]  # if the sequence number is in have_send, move the window
+                    create_window()
                     timer = time.time()                     #break to the beginning and send according new window
                     break
                                                             #if update the window, go to create_window.
@@ -152,3 +172,8 @@ while create_window() or have_send:
             break
         PLD_send(i)
 close(ADDR)
+log_file.writelines("Amount of Data Transferred (in bytes):%d\n"%amount_data_tr)
+log_file.writelines("Number of Data Segments Sent (excluding retransmissions):%d\n"%data_seg_sd)
+log_file.writelines("Number of Packets Dropped  (by the PLD module):%d\n"%data_drop)
+log_file.writelines("Number of Duplicate Acknowledgements received:%d\n"%number_of_dup)
+

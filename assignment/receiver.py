@@ -55,9 +55,12 @@ port = args[0]
 file_name = args[1]
 sock, ack, ADDR, sequence_number =start(port)
 f=open(file_name,'w')
-
+log_file = open("Receiver_log.txt", "w")
+amount_of_data = 0
+num_of_data = 0
+duplicate_seg = 0
 while True:
-    inf, outf, errf = select([sock, ], [], [],0.1)
+    inf, outf, errf = select([sock, ], [], [],0.00001)
     if inf == []:
         #print("no input")
         send_seg = segment(ack_num = ack,seq_num=sequence_number)
@@ -77,9 +80,17 @@ while True:
         if ack == seg.seq_num:
             ack = seg.seq_num + len(line)
             f.write(line)
+        else:
+            duplicate_seg += 1
+        num_of_data += 1
+        amount_of_data += len(seg.data.encode("UTF-8"))
 
         send_seg = segment(ack_num=ack, seq_num=sequence_number)
         sock.sendto(send_seg.seg, ADDR)
+log_file.writelines("Amount of Data Received (in bytes):%d\n"%amount_of_data)
+log_file.writelines("Number of Data Segments Received:%d\n"%num_of_data)
+log_file.writelines("Number of duplicate segments received:%d\n"%duplicate_seg)
+
 
 
             
