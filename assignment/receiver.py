@@ -42,11 +42,11 @@ def start(port):
         sock.sendto(segment(syn=1, seq_num=0, ack_num=seg.seq_num+1, ack=1).seg, ADDR)
     data,ADDR = sock.recvfrom(1024)  
     seg = tr_seg(data)
-    print(seg)
+    #print(seg)
     #ack = seg.ack_num
     if seg.ACK == 1:
         #print("connect success!")
-        return sock,seg.seq_num, ADDR,0
+        return sock,seg.seq_num, ADDR,1
     else:
         sock.close()
         exit("Fail to connect")
@@ -60,16 +60,17 @@ amount_of_data = 0
 num_of_data = 0
 duplicate_seg = 0
 while True:
-    inf, outf, errf = select([sock, ], [], [],0.00001)
-    if inf == []:
+    inf, outf, errf = select([sock, ], [], [], 0)
+    if inf != []:
         #print("no input")
-        send_seg = segment(ack_num = ack,seq_num=sequence_number)
-        sock.sendto(send_seg.seg, ADDR)
-    else:
+       # send_seg = segment(ack_num = ack,seq_num=sequence_number)
+       # sock.sendto(send_seg.seg, ADDR)
+    #else:
         data,ADDR = sock.recvfrom(1024)
         seg = tr_seg(data)
         line = seg.data
-        print(seg)
+        #log_file.writelines("rcv  A %8d %s %8d \n" % (seg.seq_num, seg.data, seg.ack_num))
+        print(seg.seq_num)
         if seg.FIN == 1:
             sock.sendto(segment(ack_num=seg.seq_num+3, seq_num=sequence_number).seg, ADDR)
             sequence_number += 1
@@ -82,11 +83,15 @@ while True:
             f.write(line)
         else:
             duplicate_seg += 1
-        num_of_data += 1
+
+        num_of_data += 1        #write lines into log
         amount_of_data += len(seg.data.encode("UTF-8"))
 
         send_seg = segment(ack_num=ack, seq_num=sequence_number)
         sock.sendto(send_seg.seg, ADDR)
+        #log_file.writelines("send  D %8d %s %8d \n" % (send_seg.seq_num, send_seg.data, send_seg.ack_num))
+
+
 log_file.writelines("Amount of Data Received (in bytes):%d\n"%amount_of_data)
 log_file.writelines("Number of Data Segments Received:%d\n"%num_of_data)
 log_file.writelines("Number of duplicate segments received:%d\n"%duplicate_seg)

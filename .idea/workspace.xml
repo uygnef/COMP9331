@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="259fafe4-f1b3-4cf8-a1b2-5ab67ffe83c9" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assignment/count_word.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assignment/receiver.py" afterPath="$PROJECT_DIR$/assignment/receiver.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assignment/sender_new.py" afterPath="$PROJECT_DIR$/assignment/sender_new.py" />
@@ -35,11 +34,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="receiver.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="receiver.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assignment/receiver.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="438">
-              <caret line="91" column="78" selection-start-line="91" selection-start-column="78" selection-end-line="91" selection-end-column="78" />
+            <state relative-caret-position="960">
+              <caret line="72" column="26" selection-start-line="72" selection-start-column="26" selection-end-line="72" selection-end-column="26" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -47,17 +46,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sender_new.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="sender_new.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/assignment/sender_new.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="174" column="0" selection-start-line="174" selection-start-column="0" selection-end-line="174" selection-end-column="80" />
+            <state relative-caret-position="906">
+              <caret line="162" column="77" selection-start-line="162" selection-start-column="77" selection-end-line="162" selection-end-column="77" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
                 <element signature="e#165#1007#0" expanded="false" />
                 <element signature="e#245#699#0" expanded="false" />
                 <element signature="e#1067#1322#0" expanded="false" />
-                <element signature="e#1349#2221#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -89,8 +87,8 @@
         <option value="$USER_HOME$/Desktop/test/receiver.py" />
         <option value="$USER_HOME$/Desktop/test/reveiver.py" />
         <option value="$PROJECT_DIR$/assignment/count_word.py" />
-        <option value="$PROJECT_DIR$/assignment/sender_new.py" />
         <option value="$PROJECT_DIR$/assignment/receiver.py" />
+        <option value="$PROJECT_DIR$/assignment/sender_new.py" />
       </list>
     </option>
   </component>
@@ -566,7 +564,14 @@
       <option name="project" value="LOCAL" />
       <updated>1473498999979</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="add log of sender and receiver">
+      <created>1473592445306</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1473592445306</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -574,7 +579,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="2762" height="1770" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13806255" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -582,7 +587,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980832" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36417714" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36417714" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
@@ -628,7 +633,8 @@
     <MESSAGE value="some issue with ack_num, unfix" />
     <MESSAGE value="add log for close()" />
     <MESSAGE value="disable all print" />
-    <option name="LAST_COMMIT_MESSAGE" value="disable all print" />
+    <MESSAGE value="add log of sender and receiver" />
+    <option name="LAST_COMMIT_MESSAGE" value="add log of sender and receiver" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -646,7 +652,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="11" />
+      <option name="time" value="15" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -689,7 +695,6 @@
             <element signature="e#165#1007#0" expanded="false" />
             <element signature="e#245#699#0" expanded="false" />
             <element signature="e#1067#1322#0" expanded="false" />
-            <element signature="e#1349#2221#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -713,7 +718,6 @@
             <element signature="e#165#1007#0" expanded="false" />
             <element signature="e#245#699#0" expanded="false" />
             <element signature="e#1067#1322#0" expanded="false" />
-            <element signature="e#1349#2221#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -744,7 +748,6 @@
             <element signature="e#165#1007#0" expanded="false" />
             <element signature="e#245#699#0" expanded="false" />
             <element signature="e#1067#1322#0" expanded="false" />
-            <element signature="e#1349#2221#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -775,7 +778,6 @@
             <element signature="e#165#1007#0" expanded="false" />
             <element signature="e#245#699#0" expanded="false" />
             <element signature="e#1067#1322#0" expanded="false" />
-            <element signature="e#1349#2221#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -806,7 +808,6 @@
             <element signature="e#165#1007#0" expanded="false" />
             <element signature="e#245#699#0" expanded="false" />
             <element signature="e#1067#1322#0" expanded="false" />
-            <element signature="e#1349#2221#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -820,7 +821,6 @@
             <element signature="e#165#1007#0" expanded="false" />
             <element signature="e#245#699#0" expanded="false" />
             <element signature="e#1067#1322#0" expanded="false" />
-            <element signature="e#1349#2221#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -856,7 +856,6 @@
             <element signature="e#165#1007#0" expanded="false" />
             <element signature="e#245#699#0" expanded="false" />
             <element signature="e#1067#1322#0" expanded="false" />
-            <element signature="e#1349#2221#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -981,26 +980,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/assignment/receiver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="960">
+          <caret line="72" column="26" selection-start-line="72" selection-start-column="26" selection-end-line="72" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/assignment/sender_new.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="174" column="0" selection-start-line="174" selection-start-column="0" selection-end-line="174" selection-end-column="80" />
+        <state relative-caret-position="906">
+          <caret line="162" column="77" selection-start-line="162" selection-start-column="77" selection-end-line="162" selection-end-column="77" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#165#1007#0" expanded="false" />
             <element signature="e#245#699#0" expanded="false" />
             <element signature="e#1067#1322#0" expanded="false" />
-            <element signature="e#1349#2221#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assignment/receiver.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="91" column="78" selection-start-line="91" selection-start-column="78" selection-end-line="91" selection-end-column="78" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
           </folding>
         </state>
       </provider>
