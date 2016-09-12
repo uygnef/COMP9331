@@ -59,6 +59,7 @@ log_file = open("Receiver_log.txt", "w")
 amount_of_data = 0
 num_of_data = 0
 duplicate_seg = 0
+
 while True:
     inf, outf, errf = select([sock, ], [], [], 0)
     if inf != []:
@@ -70,6 +71,7 @@ while True:
         seg = tr_seg(data)
         line = seg.data
         #log_file.writelines("rcv  A %8d %s %8d \n" % (seg.seq_num, seg.data, seg.ack_num))
+
         print(seg.seq_num)
         if seg.FIN == 1:
             sock.sendto(segment(ack_num=seg.seq_num+3, seq_num=sequence_number).seg, ADDR)
@@ -105,14 +107,3 @@ log_file.writelines("Number of duplicate segments received:%d\n"%duplicate_seg)
             
             
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-
-
