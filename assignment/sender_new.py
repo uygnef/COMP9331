@@ -103,14 +103,16 @@ def close(ADDR):
     log_file.writelines("snd  %2.3f F %8d %3d %8d\n" % (time.time() % 60, sequence_number+2, 0, acknowledge_number))
     #print("recv ack")
     while True:
-        se,ADDR = sock.recvfrom(1024)
-        seg = tr_seg(se)
-        if seg.FIN == 1:
-            log_file.writelines("rcv  %2.3f FA%8d %3d %8d\n" % (time.time() % 60, seg.seq_num, 0, seg.ack_num))
-                    #sock.sendto(segment(ack=1), ADDR)
-            log_file.writelines("snd  %2.3f A %8d %3d %8d\n" % (time.time() % 60, seg.ack_num, 0, seg.seq_num+1))
-            sock.close()
-            break
+        inf, outf, errf = select([sock, ], [], [], 0)
+        if inf:
+            se,ADDR = sock.recvfrom(1024)
+            seg = tr_seg(se)
+            if seg.FIN == 1:
+                log_file.writelines("rcv  %2.3f FA%8d %3d %8d\n" % (time.time() % 60, seg.seq_num, 0, seg.ack_num))
+                        #sock.sendto(segment(ack=1), ADDR)
+                log_file.writelines("snd  %2.3f A %8d %3d %8d\n" % (time.time() % 60, seg.ack_num, 0, seg.seq_num+1))
+                sock.close()
+                break
 
 
 ops, args = getopt.getopt(sys.argv[1:], " ")
@@ -143,29 +145,28 @@ data = file.read(MSS)
 last_element_in_window = create_window()
 bb = 0
 start_time = time.time()
+update_window_flag = False #if move window, restart from beginning
+recv_flag2 = False
+
 while send_window:
-    recv_flag = False
     for i in send_window:
+        if update_window_flag:
+            update_window_flag = False
+            break
+
+        recv_flag1 = False
         inf, outf, errf = select([sock, ], [], [], 0)
         while inf:  #receive the latest ack segment
-            recv_segment, ADDR = sock.recvfrom(1024)
+            recv_segment, ADDR = inf[0].recvfrom(1024)
             inf, outf, errf = select([sock, ], [], [], 0)
-            recv_flag = True
-        # try:            #wired error, try to start from first element in send_window
-        #     send_window.index(i)
-        # except ValueError:
-        #     print("index is wrong")
-        #     break
-        #print(i)
-        #print("now:", send_window)
+            recv_flag1 = True
+        if recv_flag1:
+            print("ack number is:", tr_seg(recv_segment).ack_num)
+
         PLD_send(i)
 
-        if recv_flag:
-            #recv_segment, ADDR = sock.recvfrom(1024)
-            #print("received segment:", tr_seg(recv_segment).ack_num)
-            #receive the data and react according ack_num while sending data
+        if recv_flag1 or recv_flag2:
             seg = tr_seg(recv_segment)
-            #print("ack=", seg.ack_num)
             log_file.writelines("rcv  %2.3f A %8d %3d %8d \n" % (time.time()%60, seg.seq_num, len(seg.data), seg.ack_num))
 
             if last_ack == seg.ack_num:
@@ -182,6 +183,7 @@ while send_window:
                     send_window = send_window[send_window.index(j)+1:]  # if the sequence number is in send_window, move the window
                     last_element_in_window = create_window()
                     timer = time.time()                     #break to the beginning and send according new window
+                    update_window_flag = True
                     break
                                                             #if update the window, go to create_window.
         if time.time() > timer + timeout / 1000:        #if timeout, go to beginning and resend from the first
@@ -189,11 +191,14 @@ while send_window:
                  #judge if send all data in send_window
 
     #if i == last_element_in_window: #when send all data in current window, wait and receive  data until timeout
-    while time.time() < timer + timeout / 1000:#wait until timeout
+        recv_flag2 = False
+    print(time.time() - timer + timeout / 1000)
+    while time.time() <= timer + timeout / 1000:#wait until timeout
         inf, outf, errf = select([sock, ], [], [], 0)
         if inf:
             recv_segment, ADDR = inf[-1].recvfrom(1024)
-            recv_flag = True
+            print("ack number is--:",tr_seg(recv_segment).ack_num)
+            recv_flag2 = True
     timer = time.time()
 
 close(ADDR)
