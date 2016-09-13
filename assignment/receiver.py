@@ -85,7 +85,6 @@ while True:
 
         send_seg = segment(ack_num=ack, seq_num=sequence_number)
         sock.sendto(send_seg.seg, ADDR)
-        print(send_seg)
         #log_file.writelines("send  D %8d %s %8d \n" % (send_seg.seq_num, send_seg.data, send_seg.ack_num))
 
 

@@ -160,11 +160,9 @@ while send_window:
             recv_segment, ADDR = inf[0].recvfrom(1024)
             inf, outf, errf = select([sock, ], [], [], 0)
             recv_flag1 = True
-        if recv_flag1:
-            print("ack number is:", tr_seg(recv_segment).ack_num)
 
         PLD_send(i)
-
+        print(i.seq_num)
         if recv_flag1 or recv_flag2:
             seg = tr_seg(recv_segment)
             log_file.writelines("rcv  %2.3f A %8d %3d %8d \n" % (time.time()%60, seg.seq_num, len(seg.data), seg.ack_num))
@@ -188,16 +186,16 @@ while send_window:
                                                             #if update the window, go to create_window.
         if time.time() > timer + timeout / 1000:        #if timeout, go to beginning and resend from the first
             break
-                 #judge if send all data in send_window
+    
+    recv_flag2 = False
 
-    #if i == last_element_in_window: #when send all data in current window, wait and receive  data until timeout
-        recv_flag2 = False
-    print(time.time() - timer + timeout / 1000)
-    while time.time() <= timer + timeout / 1000:#wait until timeout
+
+    while (time.time() - timer - timeout / 1000) < 0 and update_window_flag:#wait until timeout
+        print('break')
+        print(time.time() - timer - timeout / 1000)
         inf, outf, errf = select([sock, ], [], [], 0)
         if inf:
             recv_segment, ADDR = inf[-1].recvfrom(1024)
-            print("ack number is--:",tr_seg(recv_segment).ack_num)
             recv_flag2 = True
     timer = time.time()
 
