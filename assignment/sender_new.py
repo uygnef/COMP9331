@@ -88,7 +88,11 @@ def create_window():
         send_window.append(segment(data = str(data), seq_num = sequence_number, ack_num=acknowledge_number))
         sequence_number += len(data)
         data = file.read(MSS)
-    return data
+    last_element_in_window = 0 # initial last element
+    if send_window:
+        last_element_in_window = send_window[-1]
+    return last_element_in_window
+
 
 def close(ADDR):
     global sock
@@ -136,30 +140,32 @@ timer = time.time()
 last_ack = -1
 fast_re = 0
 data = file.read(MSS)
-create_window()
+last_element_in_window = create_window()
 bb = 0
 start_time = time.time()
 while send_window:
-    all_send_flag = False
+    recv_flag = False
     for i in send_window:
-        try:            #wired error, try to start from first element in send_window
-            send_window.index(i)
-        except ValueError:
-            break
-        PLD_send(i)
-        inf, outf, errf = select([sock,], [], [], 0)
-        #print(inf[-1].recvfrom(1024))
-        recv_flag = False
-        while True:              #try to get the last acknowledge number
+        inf, outf, errf = select([sock, ], [], [], 0)
+        while inf:  #receive the latest ack segment
+            recv_segment, ADDR = sock.recvfrom(1024)
             inf, outf, errf = select([sock, ], [], [], 0)
-            if inf:
-                recv_segment, ADDR = inf[-1].recvfrom(1024)
-                recv_flag = True
-            else:
-                break
+            recv_flag = True
+        # try:            #wired error, try to start from first element in send_window
+        #     send_window.index(i)
+        # except ValueError:
+        #     print("index is wrong")
+        #     break
+        #print(i)
+        #print("now:", send_window)
+        PLD_send(i)
 
-        if recv_flag:                  #receive the data and react according ack_num
+        if recv_flag:
+            #recv_segment, ADDR = sock.recvfrom(1024)
+            #print("received segment:", tr_seg(recv_segment).ack_num)
+            #receive the data and react according ack_num while sending data
             seg = tr_seg(recv_segment)
+            #print("ack=", seg.ack_num)
             log_file.writelines("rcv  %2.3f A %8d %3d %8d \n" % (time.time()%60, seg.seq_num, len(seg.data), seg.ack_num))
 
             if last_ack == seg.ack_num:
@@ -174,19 +180,20 @@ while send_window:
             for j in send_window:
                 if seg.ack_num == j.seq_num+len(j.data):  # judge if the ack_num == last sequence number
                     send_window = send_window[send_window.index(j)+1:]  # if the sequence number is in send_window, move the window
-                    create_window()
+                    last_element_in_window = create_window()
                     timer = time.time()                     #break to the beginning and send according new window
                     break
                                                             #if update the window, go to create_window.
         if time.time() > timer + timeout / 1000:        #if timeout, go to beginning and resend from the first
             break
+                 #judge if send all data in send_window
 
-        if send_window:         #judge if send all data in send_window
-            if i == send_window[-1]:
-                all_send_flag = True
-    while all_send_flag and time.time() < timer + timeout / 1000:
-        #print("timeout!")
-        pass
+    #if i == last_element_in_window: #when send all data in current window, wait and receive  data until timeout
+    while time.time() < timer + timeout / 1000:#wait until timeout
+        inf, outf, errf = select([sock, ], [], [], 0)
+        if inf:
+            recv_segment, ADDR = inf[-1].recvfrom(1024)
+            recv_flag = True
     timer = time.time()
 
 close(ADDR)

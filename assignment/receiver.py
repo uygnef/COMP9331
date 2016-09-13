@@ -62,17 +62,11 @@ duplicate_seg = 0
 
 while True:
     inf, outf, errf = select([sock, ], [], [], 0)
-    if inf != []:
-        #print("no input")
-       # send_seg = segment(ack_num = ack,seq_num=sequence_number)
-       # sock.sendto(send_seg.seg, ADDR)
-    #else:
+    if inf:
         data,ADDR = sock.recvfrom(1024)
         seg = tr_seg(data)
         line = seg.data
-        #log_file.writelines("rcv  A %8d %s %8d \n" % (seg.seq_num, seg.data, seg.ack_num))
-
-        print(seg.seq_num)
+        #print(seg.seq_num)
         if seg.FIN == 1:
             sock.sendto(segment(ack_num=seg.seq_num+3, seq_num=sequence_number).seg, ADDR)
             sequence_number += 1
@@ -91,6 +85,7 @@ while True:
 
         send_seg = segment(ack_num=ack, seq_num=sequence_number)
         sock.sendto(send_seg.seg, ADDR)
+        print(send_seg)
         #log_file.writelines("send  D %8d %s %8d \n" % (send_seg.seq_num, send_seg.data, send_seg.ack_num))
 
 
