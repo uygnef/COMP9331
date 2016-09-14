@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="259fafe4-f1b3-4cf8-a1b2-5ab67ffe83c9" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assignment/sender_new.py" afterPath="$PROJECT_DIR$/assignment/sender_new.py" />
     </list>
     <ignored path="COMP9331.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,8 +47,8 @@
       <file leaf-file-name="sender_new.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/assignment/sender_new.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="912">
-              <caret line="226" column="0" selection-start-line="226" selection-start-column="0" selection-end-line="226" selection-end-column="0" />
+            <state relative-caret-position="215">
+              <caret line="215" column="26" selection-start-line="215" selection-start-column="26" selection-end-line="215" selection-end-column="26" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
                 <element signature="e#1097#1352#0" expanded="false" />
@@ -617,7 +616,14 @@
       <option name="project" value="LOCAL" />
       <updated>1473818557721</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="rebuild construction, well performed.">
+      <created>1473834898562</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1473834898562</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -686,7 +692,8 @@
     <MESSAGE value="works but i do not know why" />
     <MESSAGE value="fix bug" />
     <MESSAGE value="add more bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="add more bugs" />
+    <MESSAGE value="rebuild construction, well performed." />
+    <option name="LAST_COMMIT_MESSAGE" value="rebuild construction, well performed." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1065,8 +1072,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/assignment/sender_new.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="912">
-          <caret line="226" column="0" selection-start-line="226" selection-start-column="0" selection-end-line="226" selection-end-column="0" />
+        <state relative-caret-position="215">
+          <caret line="215" column="26" selection-start-line="215" selection-start-column="26" selection-end-line="215" selection-end-column="26" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#1097#1352#0" expanded="false" />
