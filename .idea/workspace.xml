@@ -48,14 +48,13 @@
       <file leaf-file-name="sender_new.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/assignment/sender_new.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="477">
-              <caret line="175" column="18" selection-start-line="175" selection-start-column="0" selection-end-line="176" selection-end-column="0" />
+            <state relative-caret-position="912">
+              <caret line="226" column="0" selection-start-line="226" selection-start-column="0" selection-end-line="226" selection-end-column="0" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
                 <element signature="e#1097#1352#0" expanded="false" />
                 <element signature="e#1379#2251#0" expanded="false" />
-                <element signature="e#2280#2983#0" expanded="false" />
-                <element signature="e#3519#4329#0" expanded="false" />
+                <element signature="e#3612#4422#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -611,7 +610,14 @@
       <option name="project" value="LOCAL" />
       <updated>1473750211007</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="add more bugs">
+      <created>1473818557721</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1473818557721</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -679,7 +685,8 @@
     <MESSAGE value="dirty version not finish" />
     <MESSAGE value="works but i do not know why" />
     <MESSAGE value="fix bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix bug" />
+    <MESSAGE value="add more bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="add more bugs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -729,8 +736,7 @@
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#1097#1352#0" expanded="false" />
             <element signature="e#1379#2251#0" expanded="false" />
-            <element signature="e#2280#2983#0" expanded="false" />
-            <element signature="e#3519#4329#0" expanded="false" />
+            <element signature="e#3612#4422#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -763,8 +769,7 @@
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#1097#1352#0" expanded="false" />
             <element signature="e#1379#2251#0" expanded="false" />
-            <element signature="e#2280#2983#0" expanded="false" />
-            <element signature="e#3519#4329#0" expanded="false" />
+            <element signature="e#3612#4422#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -787,8 +792,7 @@
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#1097#1352#0" expanded="false" />
             <element signature="e#1379#2251#0" expanded="false" />
-            <element signature="e#2280#2983#0" expanded="false" />
-            <element signature="e#3519#4329#0" expanded="false" />
+            <element signature="e#3612#4422#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -818,8 +822,7 @@
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#1097#1352#0" expanded="false" />
             <element signature="e#1379#2251#0" expanded="false" />
-            <element signature="e#2280#2983#0" expanded="false" />
-            <element signature="e#3519#4329#0" expanded="false" />
+            <element signature="e#3612#4422#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -849,8 +852,7 @@
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#1097#1352#0" expanded="false" />
             <element signature="e#1379#2251#0" expanded="false" />
-            <element signature="e#2280#2983#0" expanded="false" />
-            <element signature="e#3519#4329#0" expanded="false" />
+            <element signature="e#3612#4422#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -880,8 +882,7 @@
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#1097#1352#0" expanded="false" />
             <element signature="e#1379#2251#0" expanded="false" />
-            <element signature="e#2280#2983#0" expanded="false" />
-            <element signature="e#3519#4329#0" expanded="false" />
+            <element signature="e#3612#4422#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -894,8 +895,7 @@
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#1097#1352#0" expanded="false" />
             <element signature="e#1379#2251#0" expanded="false" />
-            <element signature="e#2280#2983#0" expanded="false" />
-            <element signature="e#3519#4329#0" expanded="false" />
+            <element signature="e#3612#4422#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -930,8 +930,7 @@
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#1097#1352#0" expanded="false" />
             <element signature="e#1379#2251#0" expanded="false" />
-            <element signature="e#2280#2983#0" expanded="false" />
-            <element signature="e#3519#4329#0" expanded="false" />
+            <element signature="e#3612#4422#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1066,14 +1065,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/assignment/sender_new.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="477">
-          <caret line="175" column="18" selection-start-line="175" selection-start-column="0" selection-end-line="176" selection-end-column="0" />
+        <state relative-caret-position="912">
+          <caret line="226" column="0" selection-start-line="226" selection-start-column="0" selection-end-line="226" selection-end-column="0" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#1097#1352#0" expanded="false" />
             <element signature="e#1379#2251#0" expanded="false" />
-            <element signature="e#2280#2983#0" expanded="false" />
-            <element signature="e#3519#4329#0" expanded="false" />
+            <element signature="e#3612#4422#0" expanded="false" />
           </folding>
         </state>
       </provider>
