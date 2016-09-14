@@ -59,13 +59,17 @@ log_file = open("Receiver_log.txt", "w")
 amount_of_data = 0
 num_of_data = 0
 duplicate_seg = 0
-
+aaa = 0
 while True:
     inf, outf, errf = select([sock, ], [], [], 0)
     if inf:
         data,ADDR = sock.recvfrom(1024)
         seg = tr_seg(data)
         line = seg.data
+        # if aaa % 10 == 0:
+        #     print()
+        # print(seg.seq_num, end="  ")
+        aaa += 1
         #print(seg.seq_num)
         if seg.FIN == 1:
             sock.sendto(segment(ack_num=seg.seq_num+3, seq_num=sequence_number).seg, ADDR)
@@ -76,6 +80,7 @@ while True:
             break
         if ack == seg.seq_num:
             ack = seg.seq_num + len(line)
+
             f.write(line)
         else:
             duplicate_seg += 1
