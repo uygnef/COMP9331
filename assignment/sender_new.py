@@ -16,6 +16,7 @@ class segment:  # use segment class to store the sending segment.
                        + "{0:08d}".format(self.seq_num) \
                        + "{0:08d}".format(self.ack_num) + data
         self.seg = self.seg_str.encode("UTF-8")
+        self.send_time = None
 
     def __repr__(self):
         print("seg_str", self.seg_str)
@@ -65,6 +66,7 @@ def PLD_send(segment):
     global data_drop
     #global send_segment
     #global drop_segment
+    segment.send_time = time.time()
     if random()+possi < 1:
         sock.sendto(segment.seg, ADDR)
         data_seg_sd += 1
@@ -148,7 +150,45 @@ start_time = time.time()
 update_window_flag = False #if move window, restart from beginning
 recv_flag2 = False
 
+
+def receive():
+    global number_of_dup
+    global send_window
+    global last_ack
+    global fast_re
+
+    inf, outf, errf = select([sock, ], [], [], 0)
+    recv_flag = False
+    while inf:  # receive the latest ack segment
+        recv_segment, ADDR = inf[0].recvfrom(1024)
+        seg = tr_seg(recv_segment)
+        log_file.writelines("rcv  %2.3f A %8d %3d %8d \n"
+                            % (time.time() % 60, seg.seq_num, len(seg.data), seg.ack_num))
+
+        if last_ack == seg.ack_num:
+            number_of_dup += 1
+            fast_re += 1
+
+            if fast_re >= 3:  # fast retrans
+                fast_re = 0
+                return "fast retrans", 0
+        else:
+            fast_re = 0
+            for j in send_window:
+                if seg.ack_num == j.seq_num + len(j.data):  # judge if the ack_num == last sequence number
+                    send_window = send_window[send_window.index(j) + 1:]
+                    # if the sequence number is in send_window, move the window
+                    create_window()
+                    # timer = time.time()  # break to the beginning and send according new window
+                    return "update send_window", 0
+
+        inf, outf, errf = select([sock, ], [], [], 0)
+        for i in send_window:
+            if time.time()>i.send_time + timeout/1000:
+                return "timeout",i
+
 while send_window:
+
     for i in send_window:
         if update_window_flag:
             update_window_flag = False
@@ -161,8 +201,10 @@ while send_window:
             inf, outf, errf = select([sock, ], [], [], 0)
             recv_flag1 = True
 
+
         PLD_send(i)
-        print(i.seq_num)
+        print(len(send_window))
+        #print(i.seq_num)
         if recv_flag1 or recv_flag2:
             seg = tr_seg(recv_segment)
             log_file.writelines("rcv  %2.3f A %8d %3d %8d \n" % (time.time()%60, seg.seq_num, len(seg.data), seg.ack_num))
@@ -186,13 +228,11 @@ while send_window:
                                                             #if update the window, go to create_window.
         if time.time() > timer + timeout / 1000:        #if timeout, go to beginning and resend from the first
             break
-    
+
     recv_flag2 = False
 
 
     while (time.time() - timer - timeout / 1000) < 0 and update_window_flag:#wait until timeout
-        print('break')
-        print(time.time() - timer - timeout / 1000)
         inf, outf, errf = select([sock, ], [], [], 0)
         if inf:
             recv_segment, ADDR = inf[-1].recvfrom(1024)
