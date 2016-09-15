@@ -38,20 +38,19 @@ def tr_seg(data):       #translate segment into class
 def start(IP, port):    #three way handshake
     global log_file
     ADDR = (IP, int(port))
-    sock = socket(AF_INET, SOCK_DGRAM)
     seq = 0
     first_segment = segment(syn=1,seq_num=seq)
     sock.sendto(first_segment.seg, ADDR)  #syn=1, seq_num=0
-    log_file.writelines("snd  %2.3f S %8d %3d %8d\n"%( time.time()%60, first_segment.seq_num, len(first_segment.data), 0 ))
+    log_file.writelines("snd  %2.3f S %8d %3d %8d\n"%( time.time()%1*0, first_segment.seq_num, len(first_segment.data), 0 ))
 
     data,ADDR = sock.recvfrom(1024)
     seg = tr_seg(data)
-    log_file.writelines("rcv  %2.3f SA%8d %3d %8d\n"%( time.time()%60, seg.seq_num, len(seg.data), seg.ack_num ))
+    log_file.writelines("rcv  %2.3f SA%8d %3d %8d\n"%( time.time()%1*10, seg.seq_num, len(seg.data), seg.ack_num ))
 
     if seg.SYN == 1 and seg.ACK ==1:
         seq += 1
         sock.sendto(segment(ack=1, ack_num = seg.seq_num+1, seq_num=seq).seg, ADDR)
-        log_file.writelines("snd  %2.3f A %8d %3d %8d\n" % (time.time() % 60, seq, 0, seg.seq_num+1))
+        log_file.writelines("snd  %2.3f A %8d %3d %8d\n" % (time.time() % 1*10, seq, 0, seg.seq_num+1))
         #print("connect success")
     else:
         sock.close()
@@ -73,10 +72,10 @@ def PLD_send(segment):  #pld send model
         data_seg_sd += 1
         #print("PLD_send:", segment.data, segment.seq_num)
         log_file.writelines("snd  %2.3f D %8d %3d %8d\n" %
-                            (time.time() % 60, segment.seq_num, len(segment.data), segment.ack_num))
+                            (time.time() % 1*10, segment.seq_num, len(segment.data), segment.ack_num))
     else:
         data_drop += 1
-        log_file.writelines("drop %2.3f D %8d %3d %8d\n"%( time.time()%60, segment.seq_num, len(segment.data), segment.ack_num))
+        log_file.writelines("drop %2.3f D %8d %3d %8d\n"%( time.time()%1*10, segment.seq_num, len(segment.data), segment.ack_num))
     global amount_data_tr
     amount_data_tr += len(segment.data.encode("utf-8"))
     #print("send:", segment.seq_num)
@@ -93,7 +92,7 @@ def receive():      #return the reaction according different ack segments
         recv_segment, ADDR = inf[0].recvfrom(1024)
         seg = tr_seg(recv_segment)
         log_file.writelines("rcv  %2.3f A %8d %3d %8d \n"
-                            % (time.time() % 60, seg.seq_num, len(seg.data), seg.ack_num))
+                            % (time.time() % 1*10, seg.seq_num, len(seg.data), seg.ack_num))
 
         if last_ack == seg.ack_num:
             number_of_dup += 1
@@ -142,7 +141,7 @@ def close(ADDR):
 
     #print("willlllll close")
     sock.sendto(segment(seq_num=sequence_number + 2, fin=1).seg, ADDR)
-    log_file.writelines("snd  %2.3f F %8d %3d %8d\n" % (time.time() % 60, sequence_number+2, 0, acknowledge_number))
+    log_file.writelines("snd  %2.3f F %8d %3d %8d\n" % (time.time() % 1*10, sequence_number+2, 0, acknowledge_number))
     #print("recv ack")
     while True:
         inf, outf, errf = select([sock, ], [], [], 0)
@@ -150,9 +149,9 @@ def close(ADDR):
             se,ADDR = sock.recvfrom(1024)
             seg = tr_seg(se)
             if seg.FIN == 1:
-                log_file.writelines("rcv  %2.3f FA%8d %3d %8d\n" % (time.time() % 60, seg.seq_num, 0, seg.ack_num))
+                log_file.writelines("rcv  %2.3f FA%8d %3d %8d\n" % (time.time() % 1*10, seg.seq_num, 0, seg.ack_num))
                         #sock.sendto(segment(ack=1), ADDR)
-                log_file.writelines("snd  %2.3f A %8d %3d %8d\n" % (time.time() % 60, seg.ack_num, 0, seg.seq_num+1))
+                log_file.writelines("snd  %2.3f A %8d %3d %8d\n" % (time.time() % 1*10, seg.ack_num, 0, seg.seq_num+1))
                 sock.close()
                 break
 
@@ -234,4 +233,3 @@ log_file.writelines("Number of Data Segments Sent (excluding retransmissions):%d
 log_file.writelines("Number of Packets Dropped  (by the PLD module):%d\n"%data_drop)
 log_file.writelines("Number of Retransmitted Segments:%d\n"%number_of_retrans)
 log_file.writelines("Number of Duplicate Acknowledgements received:%d\n"%number_of_dup)
-
