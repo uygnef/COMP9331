@@ -38,10 +38,11 @@ def tr_seg(data):       #translate segment into class
 def start(IP, port):    #three way handshake
     global log_file
     ADDR = (IP, int(port))
+    sock = socket(AF_INET, SOCK_DGRAM)
     seq = 0
     first_segment = segment(syn=1,seq_num=seq)
     sock.sendto(first_segment.seg, ADDR)  #syn=1, seq_num=0
-    log_file.writelines("snd  %2.3f S %8d %3d %8d\n"%( time.time()%1*0, first_segment.seq_num, len(first_segment.data), 0 ))
+    log_file.writelines("snd  %2.3f S %8d %3d %8d\n"%( time.time()%10, first_segment.seq_num, len(first_segment.data), 0 ))
 
     data,ADDR = sock.recvfrom(1024)
     seg = tr_seg(data)
