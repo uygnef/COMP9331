@@ -90,18 +90,39 @@ sock.close()
 graph = {'A': {'B': 2, 'D': 1, 'C': 5}, 'E': {'D': 1, 'F': 2, 'C': 1}, 'C': {'A': 5, 'E': 1, 'D': 3, 'F': 5, 'B': 3}, 'D': {'A': 1, 'C': 3, 'B': 2, 'E': 1}, 'F': {'C': 5, 'E': 2}, 'B': {'A': 2, 'D': 2, 'C': 3}}
 def Dijkstra_Algrm(graph):
     result_set = {}
+    set_N = []
+    from_to_list = {}
     inf = float("inf")
     self_graph = graph[node_name]
     for node in graph:
         if node_name != node:
             if node in self_graph:
+                from_to_list[node] = node_name
                 result_set[node] = graph[node_name][node]
             else:
                 result_set[node] = inf
-    result_set = sorted(result_set.items(), key=lambda d: d[1])
-    if result_set:
-        select_node = result_set[0]
-        result_set = result_set[1:]
-    print(node_name, result_set)
+
+    # print("result set is", result_set)
+    sorted_result_set = sorted(result_set.items(), key=lambda d: d[1])
+
+    while len(set_N) < len(sorted_result_set):
+        break_flag = False
+        for node in sorted_result_set:
+            if node[0] not in set_N:
+                set_N.append(node[0])
+                node_distance = node[1]
+                for new_node in graph[node[0]]:
+                    if new_node == node_name:
+                        continue
+                    if graph[node[0]][new_node] + node_distance < result_set[new_node]:
+                        from_to_list[new_node] = node[0]
+                        result_set[new_node] = graph[node[0]][new_node] + node_distance
+                        break_flag = True
+                if break_flag:
+                    break
+        sorted_result_set = sorted(result_set.items(), key=lambda d: d[1])
+
+    # print(set_N, sorted_result_set,from_to_list)
+    # print(node_name, result_set)
 
 Dijkstra_Algrm(graph)
